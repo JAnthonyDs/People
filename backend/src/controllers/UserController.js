@@ -4,8 +4,8 @@ const User = require('../models/User');
 module.exports = {
 
     async encontrar(req,res){
-        const nome = req.body.nome;
-        const resultado = await User.find({$or: [{nome: {$regex: new RegExp(nome,"i")}}]}).then(resposta => {
+        const pesquisa = req.body.pesquisa;
+        const resultado = await User.find({$or: [{nome: {$regex: new RegExp(pesquisa,"i")}},{cidade: {$regex: new RegExp(pesquisa,"i")}},{jogos: {$regex: new RegExp(pesquisa,"i")}}]}).then(resposta => {
             return res.json(resposta)
         })
     },
