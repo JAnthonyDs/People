@@ -6,6 +6,8 @@ const UserController = require('./controllers/UserController')
 const routes =  express.Router();
 const upload = multer(uploadConfig);
 
-routes.post('/users',upload.single('foto') ,UserController.store)
+routes.post('/CadastrarUsers',upload.single('foto') ,UserController.store)
+routes.get('/encontrarUsers',UserController.encontrar)
+routes.get('/listarTodos', UserController.index)
 
 module.exports = routes;

@@ -2,6 +2,19 @@
 const User = require('../models/User');
 
 module.exports = {
+
+    async encontrar(req,res){
+        const nome = req.body.nome;
+        const resultado = await User.find({$or: [{nome: {$regex: new RegExp(nome,"i")}}]}).then(resposta => {
+            return res.json(resposta)
+        })
+    },
+
+    async index(req,res){
+        const usuarios = await User.find({}).then(resposta => {
+            return res.json(resposta);
+        })
+    },
     async store(req,res){
         const nome = req.body.nome;
         const cidade = req.body.cidade;
@@ -9,7 +22,7 @@ module.exports = {
         const senha = req.body.senha;
         const confirmar_senha = req.body.confirmar_senha;
         const email = req.body.email;
-        const diversao = req.body.diversao
+        const jogos = req.body.jogos
     
         let user = await User.findOne({email});
 
@@ -21,7 +34,7 @@ module.exports = {
                     foto:foto,
                     email:email,
                     senha:senha,
-                    diversao: diversao.split(',').map(diversao => diversao.trim())
+                    jogos: jogos.split(',').map(jogos => jogos.trim())
                 })
 
                 return res.json(user);
