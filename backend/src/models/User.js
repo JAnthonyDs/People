@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
     cidade: String,
     foto:String,
     email: String,
+    senha: String,
     diversao: [String]
 })
 
