@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import api from '../services/api';
 //import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -55,6 +56,29 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  
+  const [email,setEmail] = useState('')
+  const [nome,setNome] = useState('')
+  const [senha,setSenha] = useState('')
+  const [cidade,setCidade] = useState('')
+  const [confirmar_senha,setConfirmar_senha] = useState('')
+  const [jogos,setJogos] = useState('')
+
+  async function handleSubmit(event){
+    event.preventDefault();
+
+    const response = await api.post('/CadastrarUsers',{
+      email,
+      nome,
+      senha,
+      confirmar_senha,
+      cidade,
+      jogos,
+    })
+    const { _id } = response.data;
+     localStorage.setItem('user',_id);
+    
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,7 +88,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           CADASTRO
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
           <Grid item xs={12}>
               <TextField
@@ -74,7 +98,9 @@ export default function SignUp() {
                 id="name"
                 label="Nome"
                 name="nome"
-                autoComplete="email"
+                autoComplete="nome"
+                value = {nome}
+                onChange = {event => setNome(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -86,6 +112,8 @@ export default function SignUp() {
                 label="Email"
                 name="email"
                 autoComplete="email"
+                value = {email}
+                onChange = {event => setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -97,6 +125,8 @@ export default function SignUp() {
                 label="Cidade"
                 name="cidade"
                 autoComplete="cidade"
+                value = {cidade}
+                onChange = {event => setCidade(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -109,6 +139,8 @@ export default function SignUp() {
                 type="password"
                 id="senha"
                 autoComplete="current-password"
+                value = {senha}
+                onChange = {event => setSenha(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -121,6 +153,8 @@ export default function SignUp() {
                 type="password"
                 id="confirmar_senha"
                 autoComplete="current-password"
+                value = {confirmar_senha}
+                onChange = {event => setConfirmar_senha(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -131,7 +165,9 @@ export default function SignUp() {
                 id="lista_jogos"
                 label="Lista de jogos (obs.: separados por vírgula)"
                 name="Lista_jogos"
-                autoComplete="email"
+                autoComplete="Lista de jogos"
+                value = {jogos}
+                onChange = {event => setJogos(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
