@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
+
+
 //import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -54,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({ history }) {
   const classes = useStyles();
   
   const [email,setEmail] = useState('')
@@ -76,9 +78,11 @@ export default function SignUp() {
       jogos,
     })
     const { _id } = response.data;
-     localStorage.setItem('user',_id);
-    
+    localStorage.setItem('user',_id);
+    history.push('/Login')
   }
+
+  
 
   return (
     <Container component="main" maxWidth="xs">

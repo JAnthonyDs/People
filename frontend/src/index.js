@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SingUp from './pages/singUp'
 
-ReactDOM.render(<SingUp />, document.getElementById('root'));
+import App from './App'
+ReactDOM.render(<App />, document.getElementById('root'));
 
 
