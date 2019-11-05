@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import api from '../services/api'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,6 +55,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  alert('Cadastrado Com sucesso!!!')
+
+  //async function SubmitLogin(event){
+  //  event.preventDefault();
+  //  const response = await api.post('/')
+  //}
+  const [email, setEmail] = useState()
+  const [senha,setSenha] = useState()
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -74,6 +85,7 @@ export default function SignIn() {
             label="Email"
             name="email"
             autoComplete="email"
+            
             autoFocus
           />
           <TextField

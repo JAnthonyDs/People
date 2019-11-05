@@ -79,7 +79,14 @@ export default function SignUp({ history }) {
     })
     const { _id } = response.data;
     localStorage.setItem('user',_id);
-    history.push('/Login')
+    if(response.data.message ==  'email ja cadastrado' || response.data.message == 'senhas não batem'){
+      alert(`Erro!!! ${response.data.message}`)
+    }else{
+      history.push('/Login')
+    }
+    //console.log(response.data.message)
+    //console.log(response.statusText)
+    
   }
 
   
