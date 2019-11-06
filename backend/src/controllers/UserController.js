@@ -15,6 +15,16 @@ module.exports = {
             return res.json(resposta);
         })
     },
+    async autenticar(req,res){
+        const email = req.body.email;
+        const senha = req.body.senha;
+        const login = await User.find({senha: senha, email: email});
+        if(login != 0){
+            return res.json({message: 'true'})
+        }else{
+            return res.json({message: 'false'})
+        }
+    },
     async store(req,res){
         const nome = req.body.nome;
         const cidade = req.body.cidade;

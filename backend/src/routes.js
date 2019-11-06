@@ -9,5 +9,6 @@ const upload = multer(uploadConfig);
 routes.post('/CadastrarUsers',upload.single('foto') ,UserController.store)
 routes.get('/encontrarUsers',UserController.encontrar)
 routes.get('/listarTodos', UserController.index)
+routes.post('/logar',UserController.autenticar)
 
 module.exports = routes;

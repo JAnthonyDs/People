@@ -53,17 +53,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn({history}) {
   const classes = useStyles();
-  alert('Cadastrado Com sucesso!!!')
-
-  //async function SubmitLogin(event){
-  //  event.preventDefault();
-  //  const response = await api.post('/')
-  //}
   const [email, setEmail] = useState()
   const [senha,setSenha] = useState()
 
+  async function handleSubmit(event){
+    event.preventDefault();
+    
+    const response = await api.post('/logar',{email,senha})
+
+    console.log(response.data.message == 'true')
+    if(response.data.message == 'true'){
+      alert('logado')
+    }else{
+      alert('Email e/ou senha incorretos')
+    }
+
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -75,7 +82,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -85,18 +92,20 @@ export default function SignIn() {
             label="Email"
             name="email"
             autoComplete="email"
+            onChange = {event => setEmail(event.target.value)}
             
-            autoFocus
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
+            name="senha"
             label="Senha"
             type="password"
             id="password"
+            
+            onChange = {event => setSenha(event.target.value)}
             autoComplete="current-password"
           />
           <FormControlLabel
@@ -119,7 +128,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/" variant="body2">
                 {"Não tem uma conta? Cadastrar"}
               </Link>
             </Grid>
