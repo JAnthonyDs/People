@@ -25,10 +25,11 @@ module.exports = {
             return res.json({message: 'false'})
         }
     },
+    
     async store(req,res){
         const nome = req.body.nome;
         const cidade = req.body.cidade;
-        //const foto = req.file.filename;
+        const foto = req.file.filename;
         const senha = req.body.senha;
         const confirmar_senha = req.body.confirmar_senha;
         const email = req.body.email;
@@ -41,7 +42,7 @@ module.exports = {
                 user = await User.create({
                     nome:nome,
                     cidade:cidade,
-                    //foto:foto,
+                    foto:foto,
                     email:email,
                     senha:senha,
                     jogos: jogos.split(',').map(jogos => jogos.trim())

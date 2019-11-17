@@ -9,10 +9,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    //foto:{
-    //   type: String,
-    ///    required: true
-    //},
+    foto:{
+       type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true
@@ -22,6 +22,14 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
     jogos: [String]
+}, {
+    toJSON: {
+        virtuals: true
+    },
+});
+
+UserSchema.virtual('foto_url').get(function() {
+    return `http://localhost:3333/files/${this.foto}`
 })
 
 module.exports = mongoose.model('User',UserSchema);

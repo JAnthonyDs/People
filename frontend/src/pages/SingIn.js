@@ -65,7 +65,7 @@ export default function SignIn({history}) {
 
     console.log(response.data.message == 'true')
     if(response.data.message == 'true'){
-      alert('logado')
+      history.push('/Dashboard')
     }else{
       alert('Email e/ou senha incorretos')
     }

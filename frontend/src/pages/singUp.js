@@ -65,20 +65,26 @@ export default function SignUp({ history }) {
   const [cidade,setCidade] = useState('')
   const [confirmar_senha,setConfirmar_senha] = useState('')
   const [jogos,setJogos] = useState('')
+  const [foto,setFoto] = useState(null)
 
   async function handleSubmit(event){
     event.preventDefault();
+    const data = new FormData()
 
-    const response = await api.post('/CadastrarUsers',{
-      email,
-      nome,
-      senha,
-      confirmar_senha,
-      cidade,
-      jogos,
-    })
+    data.append('foto', foto)
+    data.append('email',email)
+    data.append('nome',nome)
+    data.append('senha',senha)
+    data.append('confirmar_senha',confirmar_senha)
+    data.append('cidade',cidade)
+    data.append('jogos',jogos)
+    
+    const response = await api.post('/CadastrarUsers',data)
+
     const { _id } = response.data;
+
     localStorage.setItem('user',_id);
+    
     if(response.data.message ==  'email ja cadastrado' || response.data.message == 'senhas não batem'){
       alert(`Erro!!! ${response.data.message}`)
     }else{
@@ -180,6 +186,14 @@ export default function SignUp({ history }) {
                 value = {jogos}
                 onChange = {event => setJogos(event.target.value)}
               />
+            </Grid>
+            <Grid>
+              <label>
+                <input type="file" onChange={event => setFoto(event.target.files[0])}>
+                </input>
+              </label>
+              
+              
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
