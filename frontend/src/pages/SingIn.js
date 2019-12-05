@@ -63,9 +63,13 @@ export default function SignIn({history}) {
     
     const response = await api.post('/logar',{email,senha})
 
-    console.log(response.data.message == 'true')
-    if(response.data.message == 'true'){
+    
+    if(response.data.length === 1){
+      //console.log(response.data[0].nome)
+      let nomeUser = response.data[0].nome
+      localStorage.setItem('nomeUser',nomeUser)
       history.push('/Dashboard')
+      
     }else{
       alert('Email e/ou senha incorretos')
     }

@@ -81,6 +81,10 @@ export default function SignUp({ history }) {
     
     const response = await api.post('/CadastrarUsers',data)
 
+    let nomeUser = response.data.nome;
+
+    localStorage.setItem('nomeUser',nomeUser);
+
     const { _id } = response.data;
 
     localStorage.setItem('user',_id);
@@ -88,7 +92,7 @@ export default function SignUp({ history }) {
     if(response.data.message ==  'email ja cadastrado' || response.data.message == 'senhas não batem'){
       alert(`Erro!!! ${response.data.message}`)
     }else{
-      history.push('/Login')
+      history.push('/Dashboard')
     }
     //console.log(response.data.message)
     //console.log(response.statusText)

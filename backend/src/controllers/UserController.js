@@ -4,7 +4,7 @@ const User = require('../models/User');
 module.exports = {
 
     async encontrar(req,res){
-        const pesquisa = req.body.pesquisa;
+        const pesquisa = req.query.pesquisa;
         const resultado = await User.find({$or: [{nome: {$regex: new RegExp(pesquisa,"i")}},{cidade: {$regex: new RegExp(pesquisa,"i")}},{jogos: {$regex: new RegExp(pesquisa,"i")}}]}).then(resposta => {
             return res.json(resposta)
         })
@@ -19,11 +19,7 @@ module.exports = {
         const email = req.body.email;
         const senha = req.body.senha;
         const login = await User.find({senha: senha, email: email});
-        if(login != 0){
-            return res.json({message: 'true'})
-        }else{
-            return res.json({message: 'false'})
-        }
+        return res.json(login)
     },
     
     async store(req,res){
