@@ -3,23 +3,31 @@ const User = require('../models/User');
 
 module.exports = {
 
-    async encontrar(req,res){
-        const pesquisa = req.query.pesquisa;
-        const resultado = await User.find({$or: [{nome: {$regex: new RegExp(pesquisa,"i")}},{cidade: {$regex: new RegExp(pesquisa,"i")}},{jogos: {$regex: new RegExp(pesquisa,"i")}}]}).then(resposta => {
-            return res.json(resposta)
-        })
-    },
+    //async encontrar(req,res){
+     //   const pesquisa = req.query.pesquisa;
+      //  const resultado = await User.find({$or: [{nome: {$regex: new RegExp(pesquisa,"i")}},{cidade: {$regex: new RegExp(pesquisa,"i")}},{jogos: {$regex: new RegExp(pesquisa,"i")}}]}).then(resposta => {
+      //      return res.json(resposta)
+      //  })
+    //},
 
     async index(req,res){
         const usuarios = await User.find({}).then(resposta => {
             return res.json(resposta);
         })
     },
+
     async autenticar(req,res){
         const email = req.body.email;
         const senha = req.body.senha;
         const login = await User.find({senha: senha, email: email});
         return res.json(login)
+    },
+
+    async delete(req,res){
+        const {user_id} = req.params;
+        const resutado = await User.deleteOne({ _id: user_id }).then(resposta => {
+            return res.json({message: 'Usuário deletado'})
+        })
     },
     
     async store(req,res){

@@ -4,40 +4,25 @@ import api from '../services/api'
 import './styledash.css'
 export default function Dashboard(){
     const [spots,setSpots] = useState([])
-    const [pesquisa,setPesquisa] = useState("")
     
-    //useEffect(()=>{
-    //    async function loadPeople(){
-            //const user_id = localStorage.getItem('user')
-    //        console.log(pesquisa)
-    //        const response = await api.get(`/encontrarUser?pesquisa=${pesquisa}`);
-    //        setSpots(response.data) 
-            
-    //    }
+    useEffect(()=>{
+        async function loadPeople(){
+            const response = await api.get('/listarTodos')   
+            setSpots(response.data) 
+        }
+        loadPeople()
+    },[])
 
-    //    loadPeople()
-   // },[])
-
-    async function loadPeople(){
-        //const user_id = localStorage.getItem('user')
-        //e.preventDefault();
-        console.log(pesquisa)
-        const response = await api.get(`/encontrarUser?pesquisa=${pesquisa}`);
-        setSpots(response.data) 
-        
+    async function handleDelete(user_id){
+        await api.post(`/delete/${user_id}`)
     }
 
-    loadPeople()
 
     return(
         <>
          <h1>Bem-vindo {localStorage.getItem("nomeUser")}</h1>
          <br></br>
 
-         <form onSubmit={loadPeople}>
-            <input id="pesquisa" type="text" placeholder="Pesquisar" onChange={event => setPesquisa(event.target.value)}></input>
-            
-         </form>
 
          <ul className="spot-list">
             {spots.map(spot =>(
@@ -46,7 +31,7 @@ export default function Dashboard(){
                     <strong>{spot.nome}</strong>
                     <span>{spot.cidade}</span>
                     <br></br>
-                    <button>exemplo</button>
+                    <button onClick={() => handleDelete(spot._id)}>Delete</button>
                 </li>
             ))}
             </ul>
